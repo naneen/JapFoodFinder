@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Jap Food Finder</string>
     <string name="action_settings">Menu</string>
-    <string name="btnTakePicture">Take Picture!</string>
+    <string name="camera_button">&#xf030; Take Picture</string>
 </resources>

@@ -12,22 +12,41 @@
     tools:context="com.example.naneen.japfoodfinder.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="86dp"
-        android:textSize="50dp"
-        android:textAlignment="center" />
+    <!--<TextView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="86dp"-->
+        <!--android:textSize="50dp"-->
+        <!--android:textAlignment="center" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/btnTakePicture"-->
+        <!--android:id="@+id/btnTakePicture"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnTakePicture"
-        android:id="@+id/btnTakePicture"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="@string/camera_button"
+        android:id="@+id/btnCamera"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"
+        android:textColor="#ffd3ffe5"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/capturedImage"
+        android:layout_above="@+id/btnCamera">
+
+    </ImageView>
 
 </RelativeLayout>

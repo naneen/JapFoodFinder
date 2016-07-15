@@ -1,0 +1,2 @@
+// implement camara tutorial
+https://www.simplifiedcoding.net/android-camera-app-tutorial-create-a-simple-camera-app/

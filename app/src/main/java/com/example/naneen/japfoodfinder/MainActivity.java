@@ -4,11 +4,18 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView capturedImage;
     private static final int ACTION_CAMERA = 0;
     private static final int ACTION_LOAD_GALLERY = 1;
+//    ExifInterface exif = new ExifInterface(filename);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +35,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         Typeface font = Typeface.createFromAsset( getAssets(), "fontawesome-webfont.ttf" );
         btnCamera = (Button) findViewById(R.id.btnCamera);
@@ -93,31 +101,24 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         try {
-            if(requestCode == ACTION_CAMERA && resultCode == RESULT_OK && null!=data) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String filePath = cursor.getString(columnIndex);
-
-                capturedImage.setImageBitmap(BitmapFactory.decodeFile(filePath));
-            }
-            else if(requestCode == ACTION_LOAD_GALLERY && resultCode == RESULT_OK && null!=data) {
+            if(resultCode == RESULT_OK && null!=data) {
+                Log.d("OnActResult", "in if");
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
                 Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String filePath = cursor.getString(columnIndex);
                 cursor.close();
+//                capturedImage.setImageBitmap(BitmapFactory.decodeFile(filePath));
 
-                capturedImage.setImageBitmap(BitmapFactory.decodeFile(filePath));
+                Intent intent = new Intent(MainActivity.this, Preview.class);
+                intent.putExtra("filePath", filePath);
+                startActivity(intent);
+//                finish();
             }
             else {
-                Toast.makeText(this, "You haven't picked Image",
+                Toast.makeText(this, "You haven't picked image",
                         Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {

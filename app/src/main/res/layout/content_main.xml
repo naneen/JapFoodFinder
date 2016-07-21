@@ -12,24 +12,6 @@
     tools:context="com.example.naneen.japfoodfinder.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!--<TextView-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Hello World!"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="86dp"-->
-        <!--android:textSize="50dp"-->
-        <!--android:textAlignment="center" />-->
-
-    <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/btnTakePicture"-->
-        <!--android:id="@+id/btnTakePicture"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_centerHorizontal="true" />-->
-
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -38,10 +20,9 @@
         android:background="@drawable/button"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="56dp" />
+        android:layout_marginTop="171dp" />
 
     <Button
         android:layout_width="fill_parent"
@@ -51,9 +32,17 @@
         android:background="@drawable/button"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/btnCamera"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/btnGallery"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp" />
 
 
 </RelativeLayout>

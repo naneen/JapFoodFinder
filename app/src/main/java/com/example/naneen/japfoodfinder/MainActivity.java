@@ -1,11 +1,18 @@
 package com.example.naneen.japfoodfinder;
 
+import java.io.ByteArrayOutputStream;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Debug;
 import android.provider.MediaStore;
@@ -13,6 +20,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,11 +29,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+@SuppressLint("NewApi")
 public class MainActivity extends AppCompatActivity {
     private Button btnCamera, btnGallery;
     private ImageView capturedImage;
     private static final int ACTION_CAMERA = 0;
     private static final int ACTION_LOAD_GALLERY = 1;
+    ProgressDialog prgDialog;
+    String encodedString;
+    RequestParams params = new RequestParams();
+    String imgPath, fileName;
+    Bitmap bitmap;
+    private static int RESULT_LOAD_IMG = 1;
 //    ExifInterface exif = new ExifInterface(filename);
 
     @Override
@@ -34,15 +53,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         Typeface font = Typeface.createFromAsset( getAssets(), "fontawesome-webfont.ttf" );
         btnCamera = (Button) findViewById(R.id.btnCamera);
@@ -75,27 +85,6 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, ACTION_CAMERA);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -110,7 +99,12 @@ public class MainActivity extends AppCompatActivity {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 String filePath = cursor.getString(columnIndex);
                 cursor.close();
+                String fileNameSegments[] = filePath.split("/");
+                fileName = fileNameSegments[fileNameSegments.length - 1];
+                // Put file name in Async Http Post Param which will used in Php web app
+                params.put("filename", fileName);
 //                capturedImage.setImageBitmap(BitmapFactory.decodeFile(filePath));
+
 
                 Intent intent = new Intent(MainActivity.this, Preview.class);
                 intent.putExtra("filePath", filePath);

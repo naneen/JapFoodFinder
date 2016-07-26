@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Jap Food Finder</string>
+    <string name="app_name">What is this food?</string>
     <string name="action_settings">Menu</string>
     <string name="camera_button">&#xf030; Take Picture</string>
-    <string name="gallery_button">&#xf030; Load Gallery</string>
-    <string name="search_button">Search</string>
+    <string name="gallery_button">&#xf03e; Load Gallery</string>
+    <string name="search_button">&#xf002;Classify</string>
 </resources>

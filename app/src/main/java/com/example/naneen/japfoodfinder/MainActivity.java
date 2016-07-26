@@ -6,10 +6,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -36,7 +38,7 @@ import com.loopj.android.http.RequestParams;
 @SuppressLint("NewApi")
 public class MainActivity extends AppCompatActivity {
     private Button btnCamera, btnGallery;
-    private ImageView capturedImage;
+    private ImageView capturedImage, homeImage;
     private static final int ACTION_CAMERA = 0;
     private static final int ACTION_LOAD_GALLERY = 1;
     ProgressDialog prgDialog;
@@ -53,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Resources res = getResources();
+        homeImage = (ImageView) findViewById(R.id.homeImage);
+        homeImage.setImageResource(R.drawable.homeimage);
 
         Typeface font = Typeface.createFromAsset( getAssets(), "fontawesome-webfont.ttf" );
         btnCamera = (Button) findViewById(R.id.btnCamera);
